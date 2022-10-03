@@ -1,0 +1,25 @@
+import { JwtModule } from "@auth0/angular-jwt";
+import { HttpClientModule } from "@angular/common/http";
+
+export function tokenGetter() {
+    return localStorage.getItem('access_token');
+}
+
+@NgModule({
+    declarations: [
+        AppComponent
+    ],
+    imports: [
+        HttpClientModule,
+        JwtModule.forRoot({
+            config: {
+                tokenGetter: tokenGetter,
+                allowedDomains: ['localhost:3000', 'example.com'],
+                disallowedRoutes: ["http://example.com/examplebadroute/"],
+                authScheme: "Bearer " // Default value
+            }
+        })
+    ],
+    bootstrap: [AppComponent]
+})
+export class AppModule { }
